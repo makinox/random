@@ -14,7 +14,7 @@ const TEST_PEOPLE = [
   { name: 'Gabriel', email: 'g' },
 ];
 
-type AppPerson = {
+export type AppPerson = {
   name: string;
   email: string;
 };
@@ -25,7 +25,7 @@ interface State {
   selected: AppPerson | null;
   startRandom: () => void;
   addPerson: (person: AppPerson) => void;
-  removePerson: (personName: string) => void;
+  removePerson: (personEmail: string) => void;
   removeAll: () => void;
 }
 

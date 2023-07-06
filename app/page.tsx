@@ -1,6 +1,6 @@
 import { NavBar, PeopleList, RandomSection } from '@/components';
 
-export default function Home() {
+const Home = () => {
   return (
     <main className="container min-h-screen mx-auto bg-base-100">
       <NavBar />
@@ -8,4 +8,6 @@ export default function Home() {
       <RandomSection />
     </main>
   );
-}
+};
+
+export default Home;
