@@ -5,13 +5,13 @@ import { useState, createContext, useContext } from 'react';
 import { deepCopy } from '@/utils';
 
 const TEST_PEOPLE = [
-  { name: 'a', email: 'a' },
-  { name: 'b', email: 'b' },
-  { name: 'c', email: 'c' },
-  { name: 'd', email: 'd' },
-  { name: 'e', email: 'e' },
-  { name: 'f', email: 'f' },
-  { name: 'g', email: 'g' },
+  { name: 'Aberty', email: 'a' },
+  { name: 'Jotamario', email: 'b' },
+  { name: 'Camila', email: 'c' },
+  { name: 'Diego', email: 'd' },
+  { name: 'Efrain', email: 'e' },
+  { name: 'Francisco', email: 'f' },
+  { name: 'Gabriel', email: 'g' },
 ];
 
 type AppPerson = {

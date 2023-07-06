@@ -6,9 +6,11 @@ export const PeopleList = () => {
   const { people } = usePeople();
 
   return (
-    <section>
+    <section className="gap-4 flex flex-wrap">
       {people.map((person) => (
-        <span key={person.email}>{person.email}</span>
+        <span className="badge py-6 px-6 text-2xl" key={person.email}>
+          {person.name}
+        </span>
       ))}
     </section>
   );
