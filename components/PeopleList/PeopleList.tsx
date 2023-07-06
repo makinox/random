@@ -1,17 +1,26 @@
 'use client';
 
+import cn from 'classnames';
+
 import { usePeople } from '@/contexts/People';
 
 export const PeopleList = () => {
-  const { people } = usePeople();
+  const { people, selected } = usePeople();
 
   return (
     <section className="gap-4 flex flex-wrap">
-      {people.map((person) => (
-        <span className="badge py-6 px-6 text-2xl" key={person.email}>
-          {person.name}
-        </span>
-      ))}
+      {people.map((person) => {
+        const isSelected = person.email === selected?.email;
+        const badgeClass = cn('badge py-6 px-6 text-2xl', {
+          'badge-neutral': isSelected,
+        });
+
+        return (
+          <span className={badgeClass} key={person.email}>
+            {person.name}
+          </span>
+        );
+      })}
     </section>
   );
 };

@@ -1,14 +1,11 @@
-import { NavBar, PeopleList } from '@/components';
+import { NavBar, PeopleList, RandomSection } from '@/components';
 
 export default function Home() {
   return (
     <main className="container min-h-screen mx-auto bg-base-100">
       <NavBar />
       <PeopleList />
-
-      <section>
-        <button>Lets random</button>
-      </section>
+      <RandomSection />
     </main>
   );
 }

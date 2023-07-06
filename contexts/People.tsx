@@ -1,8 +1,8 @@
 'use client';
 
-import { useState, createContext, useContext } from 'react';
+import { useState, createContext, useContext, useEffect } from 'react';
 
-import { deepCopy } from '@/utils';
+import { deepCopy, getRandomValue } from '@/utils';
 
 const TEST_PEOPLE = [
   { name: 'Aberty', email: 'a' },
@@ -20,7 +20,10 @@ type AppPerson = {
 };
 
 interface State {
+  isRandomActive: boolean;
   people: Array<AppPerson>;
+  selected: AppPerson | null;
+  startRandom: () => void;
   addPerson: (person: AppPerson) => void;
   removePerson: (personName: string) => void;
   removeAll: () => void;
@@ -30,6 +33,32 @@ const PeopleContext = createContext<State | undefined>(undefined);
 
 export function PeopleProvider({ children }: { children: JSX.Element }) {
   const [people, setPeople] = useState(TEST_PEOPLE);
+  const [selected, setSelected] = useState<AppPerson | null>(null);
+  const [isRandomActive, setIsRandomActive] = useState(false);
+
+  // Set a random person
+  useEffect(() => {
+    if (!isRandomActive) return;
+    const interval = setInterval(() => {
+      const totalpeople = people.length - 1;
+      const random = getRandomValue(totalpeople);
+      setSelected(people[random]);
+    }, 500);
+
+    return () => clearInterval(interval);
+  }, [isRandomActive, people]);
+
+  // Run for ten seconds
+  useEffect(() => {
+    if (!isRandomActive) return;
+    const timeout = setTimeout(() => {
+      setIsRandomActive(false);
+    }, 10000);
+
+    return () => clearTimeout(timeout);
+  }, [isRandomActive]);
+
+  const startRandom = () => setIsRandomActive(true);
 
   const addPerson = (person: AppPerson) => {
     setPeople((prevStorage) => {
@@ -50,7 +79,11 @@ export function PeopleProvider({ children }: { children: JSX.Element }) {
 
   const removeAll = () => setPeople([]);
 
-  return <PeopleContext.Provider value={{ people, addPerson, removePerson, removeAll }}>{children}</PeopleContext.Provider>;
+  return (
+    <PeopleContext.Provider value={{ people, selected, isRandomActive, addPerson, startRandom, removePerson, removeAll }}>
+      {children}
+    </PeopleContext.Provider>
+  );
 }
 
 export function usePeople() {
