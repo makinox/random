@@ -4,6 +4,7 @@ import { AppPerson, usePeople } from '@/contexts/People';
 
 export const PeopleTable = () => {
   const { people, removePerson } = usePeople();
+  console.log({ people });
 
   const handleDelete = (person: AppPerson) => removePerson(person.email);
 

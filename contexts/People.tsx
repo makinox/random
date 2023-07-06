@@ -4,16 +4,6 @@ import { useState, createContext, useContext, useEffect } from 'react';
 
 import { deepCopy, getRandomValue } from '@/utils';
 
-const TEST_PEOPLE = [
-  { name: 'Aberty', email: 'a' },
-  { name: 'Jotamario', email: 'b' },
-  { name: 'Camila', email: 'c' },
-  { name: 'Diego', email: 'd' },
-  { name: 'Efrain', email: 'e' },
-  { name: 'Francisco', email: 'f' },
-  { name: 'Gabriel', email: 'g' },
-];
-
 export type AppPerson = {
   name: string;
   email: string;
@@ -24,6 +14,7 @@ interface State {
   people: Array<AppPerson>;
   selected: AppPerson | null;
   startRandom: () => void;
+  addMany: (list: Array<AppPerson>) => void;
   addPerson: (person: AppPerson) => void;
   removePerson: (personEmail: string) => void;
   removeAll: () => void;
@@ -32,7 +23,7 @@ interface State {
 const PeopleContext = createContext<State | undefined>(undefined);
 
 export function PeopleProvider({ children }: { children: JSX.Element }) {
-  const [people, setPeople] = useState(TEST_PEOPLE);
+  const [people, setPeople] = useState<Array<AppPerson>>([]);
   const [selected, setSelected] = useState<AppPerson | null>(null);
   const [isRandomActive, setIsRandomActive] = useState(false);
 
@@ -60,6 +51,13 @@ export function PeopleProvider({ children }: { children: JSX.Element }) {
 
   const startRandom = () => setIsRandomActive(true);
 
+  const addMany = (list: Array<AppPerson>) => {
+    setPeople((prevStorage) => ({
+      ...prevStorage,
+      ...list,
+    }));
+  };
+
   const addPerson = (person: AppPerson) => {
     setPeople((prevStorage) => {
       const copiedOrders = deepCopy(prevStorage);
@@ -80,7 +78,7 @@ export function PeopleProvider({ children }: { children: JSX.Element }) {
   const removeAll = () => setPeople([]);
 
   return (
-    <PeopleContext.Provider value={{ people, selected, isRandomActive, addPerson, startRandom, removePerson, removeAll }}>
+    <PeopleContext.Provider value={{ people, selected, isRandomActive, addPerson, startRandom, addMany, removePerson, removeAll }}>
       {children}
     </PeopleContext.Provider>
   );
