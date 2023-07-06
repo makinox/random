@@ -1,6 +1,7 @@
 'use client';
 
 import { NavBar, PeopleForm, PeopleTable } from '@/components';
+import Link from 'next/link';
 import { useState } from 'react';
 
 const Edit = () => {
@@ -11,6 +12,12 @@ const Edit = () => {
   return (
     <main className="container min-h-screen mx-auto bg-base-100">
       <NavBar />
+
+      <section className="flex justify-end my-4">
+        <Link href="/" className="btn btn-success btn-xs">
+          Home
+        </Link>
+      </section>
 
       <PeopleTable />
 
