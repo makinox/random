@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, createContext, useContext, useEffect } from 'react';
+import { useState, createContext, useContext, useEffect, useMemo } from 'react';
 
 import { deepCopy, getRandomValue } from '@/utils';
 
@@ -26,6 +26,13 @@ export function PeopleProvider({ children }: { children: JSX.Element }) {
   const [people, setPeople] = useState<Array<AppPerson>>([]);
   const [selected, setSelected] = useState<AppPerson | null>(null);
   const [isRandomActive, setIsRandomActive] = useState(false);
+
+  const uniquePeople = useMemo(() => {
+    const unique = new Set(people.map((person) => person.email));
+    return Array.from(unique).map((element) => {
+      return people.find((person) => person.email === element);
+    });
+  }, [people]);
 
   // Set a random person
   useEffect(() => {
@@ -78,7 +85,7 @@ export function PeopleProvider({ children }: { children: JSX.Element }) {
   const removeAll = () => setPeople([]);
 
   return (
-    <PeopleContext.Provider value={{ people, selected, isRandomActive, addPerson, startRandom, addMany, removePerson, removeAll }}>
+    <PeopleContext.Provider value={{ people: uniquePeople, selected, isRandomActive, addPerson, startRandom, addMany, removePerson, removeAll }}>
       {children}
     </PeopleContext.Provider>
   );
