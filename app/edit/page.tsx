@@ -1,43 +1,27 @@
 'use client';
 
-import { AppPerson, usePeople } from '@/contexts/People';
-import { NavBar } from '@/components';
+import { NavBar, PeopleForm, PeopleTable } from '@/components';
+import { useState } from 'react';
 
 const Edit = () => {
-  const { people, removePerson } = usePeople();
+  const [formIsActive, setFormActive] = useState(false);
 
-  const handleDelete = (person: AppPerson) => removePerson(person.email);
+  const toggleForm = () => setFormActive((prev) => !prev);
 
   return (
     <main className="container min-h-screen mx-auto bg-base-100">
       <NavBar />
 
-      <section>
-        <table className="table">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {people.map((person, index) => (
-              <tr key={person.email} className="hover">
-                <th>{index}</th>
-                <td>{person.name}</td>
-                <td>{person.email}</td>
-                <td>
-                  <button className="btn btn-error btn-xs" onClick={() => handleDelete(person)}>
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      <PeopleTable />
+
+      <section className="flex justify-around my-28">
+        <button className="btn btn-neutral" onClick={toggleForm}>
+          Add someone
+        </button>
+        <button className="btn btn-neutral">Add file</button>
       </section>
+
+      {formIsActive && <PeopleForm />}
     </main>
   );
 };
