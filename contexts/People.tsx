@@ -3,6 +3,7 @@
 import { useState, createContext, useContext, useEffect, useMemo } from 'react';
 
 import { deepCopy, getRandomValue } from '@/utils';
+import useStateWithStorage from '@/hooks/useStateWithStorage';
 
 export type AppPerson = {
   name: string;
@@ -23,15 +24,13 @@ interface State {
 const PeopleContext = createContext<State | undefined>(undefined);
 
 export function PeopleProvider({ children }: { children: JSX.Element }) {
-  const [people, setPeople] = useState<Array<AppPerson>>([]);
+  const { storage: people, setStorage: setPeople } = useStateWithStorage<Array<AppPerson>>('PEOPLE_KEY', []);
   const [selected, setSelected] = useState<AppPerson | null>(null);
   const [isRandomActive, setIsRandomActive] = useState(false);
 
   const uniquePeople = useMemo(() => {
     const unique = new Set(people.map((person) => person.email));
-    return Array.from(unique).map((element) => {
-      return people.find((person) => person.email === element);
-    });
+    return Array.from(unique).map((element) => people.find((person) => person.email === element) as AppPerson);
   }, [people]);
 
   // Set a random person
