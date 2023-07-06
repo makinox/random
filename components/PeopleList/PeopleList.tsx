@@ -12,7 +12,7 @@ export const PeopleList = () => {
       {people.map((person) => {
         const isSelected = person.email === selected?.email;
         const badgeClass = cn('badge py-6 px-6 text-2xl', {
-          'badge-neutral': isSelected,
+          'badge-primary': isSelected,
         });
 
         return (
