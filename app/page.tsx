@@ -2,7 +2,7 @@ import { NavBar, PeopleList } from '@/components';
 
 export default function Home() {
   return (
-    <main className="container min-h-screen mx-auto">
+    <main className="container min-h-screen mx-auto bg-base-100">
       <NavBar />
       <PeopleList />
 
