@@ -45,7 +45,15 @@ const Edit = () => {
         <button className="btn btn-neutral" onClick={toggleForm}>
           Add someone
         </button>
-        <input type="file" className="file-input file-input-bordered w-full max-w-xs" multiple={false} onChange={handleFileInput} />
+        <div className="tooltip" data-tip={`Format: [{name: "Jhon", email: "jhon@gmail.com"}]`}>
+          <input
+            type="file"
+            className="file-input file-input-bordered w-full max-w-xs"
+            accept="application/JSON"
+            multiple={false}
+            onChange={handleFileInput}
+          />
+        </div>
         <button className="btn btn-error" onClick={() => removeAll()}>
           Reset
         </button>
