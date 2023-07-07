@@ -22,9 +22,9 @@ export const PeopleList = () => {
         });
 
         return (
-          <span className={badgeClass} key={person.email}>
-            {person.name}
-          </span>
+          <div key={person.email} className="tooltip" data-tip={`${person.name} - ${person.email}`}>
+            <span className={badgeClass}>{person.name}</span>
+          </div>
         );
       })}
     </section>
