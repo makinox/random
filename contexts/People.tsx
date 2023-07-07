@@ -24,7 +24,7 @@ interface State {
 const PeopleContext = createContext<State | undefined>(undefined);
 
 export function PeopleProvider({ children }: { children: JSX.Element }) {
-  const { storage: people, setStorage: setPeople } = useStateWithStorage<Array<AppPerson>>('PEOPLE_KEY', []);
+  const [people, setPeople] = useState<Array<AppPerson>>([]);
   const [selected, setSelected] = useState<AppPerson | null>(null);
   const [isRandomActive, setIsRandomActive] = useState(false);
 

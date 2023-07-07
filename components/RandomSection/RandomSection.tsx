@@ -1,15 +1,25 @@
 'use client';
 
 import { usePeople } from '@/contexts/People';
+import Link from 'next/link';
 
 export const RandomSection = () => {
-  const { selected, startRandom, isRandomActive } = usePeople();
+  const { people, selected, startRandom, isRandomActive } = usePeople();
 
   const isGameOver = !isRandomActive && selected?.name;
 
   const handleClick = () => {
     startRandom();
   };
+
+  if (people.length === 0)
+    return (
+      <section className="flex justify-center">
+        <Link href="/edit" className="btn btn-neutral">
+          Add names
+        </Link>
+      </section>
+    );
 
   return (
     <section>
